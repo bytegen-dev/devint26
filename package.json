@@ -1,0 +1,46 @@
+{
+  "name": "devint26",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "GitHub talent intelligence agent (Masumi HTTP API)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bytegen-dev/devint26.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bytegen-dev/devint26/issues"
+  },
+  "homepage": "https://github.com/bytegen-dev/devint26#readme",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@prisma/client": "^6.0.0",
+    "canonicalize": "^2.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "prisma": "^6.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "typescript-eslint": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
