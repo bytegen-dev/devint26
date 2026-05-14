@@ -5,6 +5,7 @@ import { getAvailability } from './routes/availability.js';
 import { getInputSchema } from './routes/input_schema.js';
 import { getStatus } from './routes/status.js';
 import { postStartJob } from './routes/start_job.js';
+import { getCredential } from './routes/get_credential.js';
 import { logError, logInfo } from './logger.js';
 
 const app = express();
@@ -32,6 +33,7 @@ app.get('/status', (req, res, next) => {
 app.post('/start_job', (req, res, next) => {
   void postStartJob(req, res).catch(next);
 });
+app.get('/get-credential', getCredential);
 
 app.use(
   (
