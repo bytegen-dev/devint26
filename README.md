@@ -112,6 +112,8 @@ Implementation: `canonicalize` + helpers in `src/lib/hash.ts`.
 
 Git hooks (Husky): **pre-commit** → **lint-staged** (`eslint --fix` on staged `src/**/*.ts`). **pre-push** → **`pnpm run build`** then **`pnpm run lint`**. With Husky, `pnpm install` must run from a directory that has `.git` (this repo as root) so `prepare` wires hooks. NVM lines in hook scripts help GitHub Desktop and similar find Node.
 
+**Pull requests:** `.github/workflows/ci.yml` runs **`lint`** and **`build`** on every PR and on pushes to **`main`**. To block merges when CI fails: GitHub repo → **Settings** → **Branches** → **Branch protection rules** → add rule for **`main`** → enable **Require status checks to pass before merging** → select the **`lint-and-build`** check (after one run appears in the list).
+
 ---
 
 `.env` is gitignored. Unhandled failures return HTTP 500 with a short body; `src/logger.ts` writes detail to stderr.
