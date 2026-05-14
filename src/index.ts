@@ -8,6 +8,18 @@ import { postStartJob } from './routes/start_job.js';
 import { logError, logInfo } from './logger.js';
 
 const app = express();
+
+app.use((_req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (_req.method === 'OPTIONS') {
+    res.sendStatus(204);
+    return;
+  }
+  next();
+});
+
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/availability', (req, res, next) => {
