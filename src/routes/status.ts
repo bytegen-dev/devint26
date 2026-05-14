@@ -34,6 +34,7 @@ export async function getStatus(req: Request, res: Response): Promise<void> {
     );
     res.json({
       ...base,
+      result: JSON.stringify(job.outputData),
       output: job.outputData,
       input_hash: job.inputHash,
       output_hash: job.outputHash,
