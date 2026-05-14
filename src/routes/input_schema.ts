@@ -20,6 +20,9 @@ export function getInputSchema(_req: Request, res: Response): void {
           description: 'Optional geographic filter for the developer search',
           placeholder: 'e.g. Berlin, Lagos, India',
         },
+        validations: [
+          { validation: 'optional', value: true },
+        ],
       },
       {
         id: 'limit',
@@ -29,6 +32,11 @@ export function getInputSchema(_req: Request, res: Response): void {
           description: 'Number of developer profiles to analyze (1–10)',
           default: 5,
         },
+        validations: [
+          { validation: 'optional', value: true },
+          { validation: 'min', value: 1 },
+          { validation: 'max', value: 10 },
+        ],
       },
     ],
   });
