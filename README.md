@@ -47,6 +47,18 @@ pnpm run build && pnpm start
 | `GITHUB_MAX_RETRIES` | no | `5` |
 | `GITHUB_SEARCH_QUERY_MAX_LENGTH` | no | `256` |
 
+### Railway
+
+Works as a standard Node service + Postgres.
+
+1. **Project:** connect [GitHub repo](https://github.com/bytegen-dev/devint26); add the **Postgres** plugin and point **`DATABASE_URL`** at it (reference variable from the DB service).
+2. **Variables:** `GITHUB_TOKEN`, `ANTHROPIC_API_KEY`; optional keys same as the table above. Set **`HUSKY=0`** if `pnpm install` on Railway shouldn’t run Husky.
+3. **Build / start:** Nixpacks detects **`pnpm-lock.yaml`**. **`pnpm run build`** runs **`prisma generate`** then **`tsc`**. Start with **`pnpm start`** ( **`node dist/index.js`** ). **`PORT`** is set by Railway.
+4. **Schema:** once per environment, run **`pnpm exec prisma db push`** (e.g. `railway shell` from the CLI, or a one-off command) so tables exist before traffic hits **`/start_job`**.
+5. **Masumi:** use the service **public HTTPS URL** as the agent base URL. Optional health check path: **`/availability`**.
+
+Docs: [Railway](https://docs.railway.app/).
+
 ---
 
 ### Routes
