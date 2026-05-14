@@ -8,15 +8,16 @@ datasource db {
 }
 
 model Job {
-  id           String    @id @default(cuid())
-  status       String
+  id                     String    @id @default(cuid())
+  status                 String
   /// `identifier_from_purchaser` from start_job (hash preimage)
-  buyerId      String
-  inputData    Json
-  inputHash    String?
-  outputData   Json?
-  outputHash   String?
-  errorMessage String?
-  createdAt    DateTime  @default(now())
-  completedAt  DateTime?
+  buyerId                String
+  inputData              Json
+  inputHash              String?
+  outputData             Json?
+  outputHash             String?
+  errorMessage           String?
+  blockchainIdentifier   String?
+  createdAt              DateTime  @default(now())
+  completedAt            DateTime?
 }
