@@ -74,10 +74,10 @@ Docs: [Railway](https://docs.railway.app/).
 
 Body:
 
-- `input_data`: array of `{ key, value }` entries; keys are `query` (required), `location`, `limit`. `limit` defaults to 5, range 1–10.
-- `identifier_from_purchaser`: required, non-empty. Same string the buyer side uses when building input/output hashes for payment/decision logging.
+- `input_data`: flat object `{ "query": "...", "location": "...", "limit": 5 }` or array of `{ key, value }` entries. `query` is required; `location` is optional; `limit` defaults to 5, range 1–10.
+- `identifier_from_purchaser`: optional for free agents. Same string the buyer side uses when building input/output hashes for decision logging.
 
-`201`: `{ "job_id", "status": "awaiting_payment" }`. Processing is async; poll `/status`.
+`201`: `{ "job_id", "id" }`. Processing starts immediately; poll `/status`.
 
 **`GET /status`**
 

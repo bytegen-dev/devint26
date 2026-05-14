@@ -1,7 +1,7 @@
 import { mapPool } from '../lib/concurrency.js';
 import { mipHashInputHex, mipHashOutputHex } from '../lib/hash.js';
 import { logError } from '../logger.js';
-import { parseInputDataArray } from '../parse_input.js';
+import { parseInputData } from '../parse_input.js';
 import { prisma } from '../db.js';
 import { fetchUserBundle, searchUsers, type UserGithubBundle } from './github.js';
 import {
@@ -21,17 +21,17 @@ function requireEnv(name: string): string {
 export async function createJobRecord(args: {
   buyerId: string;
   inputDataJson: unknown;
-}): Promise<{ id: string }> {
+}): Promise<{ id: string; inputHash: string }> {
   const inputHash = mipHashInputHex(args.buyerId, args.inputDataJson);
   const job = await prisma.job.create({
     data: {
-      status: 'awaiting_payment',
+      status: 'running',
       buyerId: args.buyerId,
       inputData: args.inputDataJson as object,
       inputHash,
     },
   });
-  return { id: job.id };
+  return { id: job.id, inputHash };
 }
 
 async function markRunning(jobId: string): Promise<void> {
@@ -106,7 +106,7 @@ export function runPipeline(jobId: string): void {
         return;
       }
 
-      const payload = parseInputDataArray(job.inputData);
+      const payload = parseInputData(job.inputData);
       if (!payload) {
         await safeMarkFailed(jobId, 'Stored input_data is invalid or missing query');
         return;
