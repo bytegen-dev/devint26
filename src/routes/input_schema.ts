@@ -5,41 +5,30 @@ export function getInputSchema(_req: Request, res: Response): void {
     input_data: [
       {
         id: 'query',
-        type: 'STRING',
+        type: 'string',
         name: 'Search Query',
         data: {
-          placeholder: 'e.g. "Rust blockchain developers" or "bytegen-dev"',
           description: 'Natural language query describing the developers you want to find, or a specific GitHub username',
+          placeholder: 'e.g. "Rust blockchain developers" or "bytegen-dev"',
         },
-        validations: [
-          { type: 'FORMAT', value: 'NON_EMPTY' },
-        ],
       },
       {
         id: 'location',
-        type: 'STRING',
+        type: 'string',
         name: 'Location',
         data: {
-          placeholder: 'e.g. Berlin, Lagos, India',
           description: 'Optional geographic filter for the developer search',
+          placeholder: 'e.g. Berlin, Lagos, India',
         },
-        validations: [
-          { type: 'OPTIONAL', value: true },
-        ],
       },
       {
         id: 'limit',
-        type: 'NUMBER',
+        type: 'number',
         name: 'Number of Results',
         data: {
-          default: 5,
           description: 'Number of developer profiles to analyze (1–10)',
+          default: 5,
         },
-        validations: [
-          { type: 'OPTIONAL', value: true },
-          { type: 'MIN', value: 1 },
-          { type: 'MAX', value: 10 },
-        ],
       },
     ],
   });
