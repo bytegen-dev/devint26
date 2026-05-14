@@ -21,7 +21,7 @@ export function getInputSchema(_req: Request, res: Response): void {
           placeholder: 'e.g. Berlin, Lagos, India',
         },
         validations: [
-          { validation: 'optional', value: true },
+          { validation: 'optional', value: 'true' },
         ],
       },
       {
@@ -33,7 +33,7 @@ export function getInputSchema(_req: Request, res: Response): void {
           default: 5,
         },
         validations: [
-          { validation: 'optional', value: true },
+          { validation: 'optional', value: 'true' },
           { validation: 'min', value: 1 },
           { validation: 'max', value: 10 },
         ],
