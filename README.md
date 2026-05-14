@@ -49,13 +49,13 @@ pnpm run build && pnpm start
 
 ### Railway
 
-Works as a standard Node service + Postgres.
+Works as a standard Node service + Postgres. Check in **`railway.json`**: build (`prisma generate` + `tsc` via `pnpm run build`), start (`pnpm start`), health check **`/availability`**, **`ON_FAILURE`** restart. That overrides blank or wrong dashboard commands; see [config as code](https://docs.railway.app/reference/config-as-code).
 
 1. **Project:** connect [GitHub repo](https://github.com/bytegen-dev/devint26); add the **Postgres** plugin and point **`DATABASE_URL`** at it (reference variable from the DB service).
-2. **Variables:** `GITHUB_TOKEN`, `ANTHROPIC_API_KEY`; optional keys same as the table above. Set **`HUSKY=0`** if `pnpm install` on Railway shouldn’t run Husky.
-3. **Build / start:** Nixpacks detects **`pnpm-lock.yaml`**. **`pnpm run build`** runs **`prisma generate`** then **`tsc`**. Start with **`pnpm start`** ( **`node dist/index.js`** ). **`PORT`** is set by Railway.
-4. **Schema:** once per environment, run **`pnpm exec prisma db push`** (e.g. `railway shell` from the CLI, or a one-off command) so tables exist before traffic hits **`/start_job`**.
-5. **Masumi:** use the service **public HTTPS URL** as the agent base URL. Optional health check path: **`/availability`**.
+2. **Variables:** `GITHUB_TOKEN`, `ANTHROPIC_API_KEY`; optional keys same as the table above. Set **`HUSKY=0`** on the service so `pnpm install` / `prepare` does not require a local `.git` for Husky.
+3. **Install:** Railpack detects **`pnpm-lock.yaml`** and runs install before **`buildCommand`**. **`pnpm run build`** runs **`prisma generate`** then **`tsc`**. **`PORT`** is injected by Railway at runtime.
+4. **Schema:** once per environment, run **`pnpm exec prisma db push`** (e.g. `railway shell`) so tables exist before **`/start_job`** and before **`/availability`** can pass health checks against the DB.
+5. **Masumi:** use the service **public HTTPS URL** as the agent base URL.
 
 Docs: [Railway](https://docs.railway.app/).
 
